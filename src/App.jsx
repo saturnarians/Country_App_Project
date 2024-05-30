@@ -2,12 +2,13 @@ import './App.css'
 import CountryDetails from './components/CountryDetails'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
-import { useContext } from "react";
+import { useContext,useState } from "react";
 import { ThemeContext } from "./context/ThemeContext";
-// import { UserContext } from './context/apiContext/UserContext'
+
+
 function App() {
   const {theme}=useContext(ThemeContext)
-  // const {userData}=useContext(UserContext)
+  const [searchParams, setSearchParams] = useState({ query: '', continent: '' });
   return (
     <>
   <div className={`${ theme==='light'?'bg-white':'bg-darkBlue' }  flex flex-col justify-center items-center p-[1rem] `}>
@@ -15,12 +16,8 @@ function App() {
   </div>
 
   <div className={`${ theme==='light'?'bg-veryLightGray':'bg-veryDarkBlue' } flex flex-col justify-center items-center p-[1rem]`}>
-    <SearchBar/>
-  
-    
-    {/* {userData?.id
-    && } */}
-     <CountryDetails/> 
+    <SearchBar onSearch={setSearchParams} />
+    <CountryDetails query={searchParams.query} continent={searchParams.continent} /> 
     
   </div>
   </>
