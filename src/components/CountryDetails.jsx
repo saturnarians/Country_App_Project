@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { ThemeContext } from "../context/ThemeContext";
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
  // Note: the empty deps array [] means
  // this useEffect will run once
 
@@ -54,16 +55,17 @@ const CountryDetails = ({ query, continent }) => {
       if (error) return <div className="text-center mt-10 text-red-500">Error: {error}</div>;
 
       return (
-  <div className="container mx-auto px-4 py-8">
+  <div className={`container mx-auto px-4 py-8 ${theme=='light'?'bg-veryLightGray': 'bg-veryDarkBlue'}`}>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {filteredCountries.map((country) => (
           <li key={country.cca3} className={`border shadow-lg ${theme=='light'?'bg-white': 'bg-darkBlue'}`}>
+            <Link to={`/country/${country.cca3}`}>
             <img
               src={country.flags.svg}
               alt={`Flag of ${country.name.common}`}
               className="w-full h-40 object-cover mb-4"
             />
-            <div className={`m-4 ${theme==='light'? 'text-darkGray bg-veryLightGray':'text-white bg-darkBlue'}`}>
+            <div className={`m-4 ${theme==='light'? 'text-darkGray bg-white':'text-white bg-darkBlue'}`}>
             <div className="text-lg font-semibold pb-4">{country.name.common}</div>
             <div className="text-sm text-gray-600 pb-1">
               <strong>Population:</strong> {country.population.toLocaleString()}
@@ -75,6 +77,7 @@ const CountryDetails = ({ query, continent }) => {
               <strong>Capital:</strong> {country.capital}
             </div>
             </div>
+            </Link>
           </li>
         ))}
       </ul>
